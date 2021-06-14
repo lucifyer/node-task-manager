@@ -27,13 +27,16 @@ MongoClient.connect(connectionURL, { useNewUrlParser: true, useUnifiedTopology: 
     //Insert Many
     // db.collection('tasks').insertMany([{
     //     description: 'Node course',
-    //     status: false,
+    //     completed: false,
+    //     priority: 2,
     // }, {
     //     description: 'DS',
-    //     status: false,
+    //     completed: false,
+    //     priority: 2,
     // }, {
     //     description: 'recharge phone',
-    //     status: true,
+    //     completed: true,
+    //     priority: 2,
     // }
     // ], (error, result) => {
     //     if (error) {
@@ -76,10 +79,10 @@ MongoClient.connect(connectionURL, { useNewUrlParser: true, useUnifiedTopology: 
 
     // update Many
     // db.collection('tasks').updateMany( {
-    //     status: false,
+    //     completed: false,
     // }, {
     //     $set: {
-    //         status: true,
+    //         completed: true,
     //     }
     // }).then(response => {
     //     console.log(response.modifiedCount)
@@ -89,12 +92,14 @@ MongoClient.connect(connectionURL, { useNewUrlParser: true, useUnifiedTopology: 
 
     // 4. DELETE
     // Similar deleteOne and deleteMany
-    db.collection('users').deleteMany({
-        age: 0
-    }).then(response => {
-        console.log(response.deletedCount)
-    }).catch(error => {
-        console.log('error', error)
-    })
+    // db.collection('users').deleteMany({
+    //     age: 0
+    // }).then(response => {
+    //     console.log(response.deletedCount)
+    // }).catch(error => {
+    //     console.log('error', error)
+    // })
+
+    // db.collection('tasks').deleteMany()
 
 })
