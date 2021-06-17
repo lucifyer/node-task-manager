@@ -58,6 +58,16 @@ userSchema.methods.generateAuthToken = async function () {
     return token
 }
 
+// Overriding the inbuilt function so doesn't need to be called explicitly
+// JSON.strigify is called when we try to send the user in the response. Which calls this method
+userSchema.methods.toJSON = function () {
+    const user = this
+    const userObject = user.toObject()
+    delete userObject.password
+    delete userObject.tokens
+    return userObject
+}
+
 userSchema.statics.findByCredentials = async (email, password) => {
     const user = await User.findOne({ email })
     if (!user) {
