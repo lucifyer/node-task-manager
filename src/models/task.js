@@ -19,6 +19,12 @@ const taskSchema = new Schema({
                 throw new Error('Priority has to be between 0 to 5')
             }
         }
+    },
+    author: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        // This creates a reference to the User and can be populated by populate methods
+        ref: 'User'
     }
 })
 

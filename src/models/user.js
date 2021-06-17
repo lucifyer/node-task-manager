@@ -3,6 +3,7 @@ const { Schema } = mongoose
 const validator = require('validator')
 const bycrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
+const Task = require('./task')
 
 const userSchema = new Schema({
     name: {
@@ -50,6 +51,13 @@ const userSchema = new Schema({
     }]
 })
 
+// Like foreign key to have relationships using ref
+userSchema.virtual('tasks', {
+    ref: 'Task',
+    localField: '_id',
+    foreignField: 'author'
+})
+
 userSchema.methods.generateAuthToken = async function () {
     const user = this
     const token = jwt.sign({ _id: user._id.toString()}, 'verysecretkey')
@@ -85,6 +93,13 @@ userSchema.pre('save', async function (next) {
     if (this.isModified('password')) {
         this.password = bycrypt.hashSync(this.password, 8)
     }
+    next()
+})
+
+// Delete user tasks when user is removed
+userSchema.pre('remove', async function (next) {
+    const user = this
+    await Task.deleteMany({ author: user._id })
     next()
 })
 
