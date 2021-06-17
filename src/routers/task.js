@@ -16,10 +16,35 @@ router.post('/tasks', auth, async (req, res) => {
     }
 })
 
+// PARAMS
+// completed (Boolean)
+// limit (Integer)
+// skip (Integer)
+// sortBy (String) field_order
+// e.g: createdAt_desc, completed_asc
 router.get('/tasks', auth, async (req,res) => {
     try {
+        const match = {}
+        if (req.query.completed) {
+            // params come as string, hence conversion
+            match.completed = req.query.completed === 'true'
+        }
+        const sort = {}
+        if (req.query.sortBy) {
+            const parts = req.query.sortBy.split('_')
+            // 1 is ASC, -1 is DESC
+            sort[parts[0]] = parts[1] === 'asc' ? 1 : -1
+        }
         // this uses the foreign key reference to populate the task array from task collection
-        await req.user.populate('tasks').execPopulate()
+        await req.user.populate({
+            path: 'tasks',
+            match,
+            options: {
+                limit: parseInt(req.query.limit),
+                skip: parseInt(req.query.skip),
+                sort,
+            }
+        }).execPopulate()
         res.send(req.user.tasks)
     } catch (error) {
         res.status(500).send(error)

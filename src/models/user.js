@@ -49,6 +49,9 @@ const userSchema = new Schema({
             require: true
         }
     }]
+}, {
+    // adds createdAt and updatedAt timestamps to the collection entry
+    timestamps: true
 })
 
 // Like foreign key to have relationships using ref

@@ -26,6 +26,8 @@ const taskSchema = new Schema({
         // This creates a reference to the User and can be populated by populate methods
         ref: 'User'
     }
+}, {
+    timestamps: true
 })
 
 const Task = mongoose.model('Task', taskSchema)
