@@ -48,7 +48,10 @@ const userSchema = new Schema({
             type: String,
             require: true
         }
-    }]
+    }],
+    avatar: {
+        type: Buffer
+    },
 }, {
     // adds createdAt and updatedAt timestamps to the collection entry
     timestamps: true
@@ -76,6 +79,7 @@ userSchema.methods.toJSON = function () {
     const userObject = user.toObject()
     delete userObject.password
     delete userObject.tokens
+    delete userObject.avatar
     return userObject
 }
 
