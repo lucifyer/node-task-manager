@@ -3,7 +3,7 @@ const nodemailer = require("nodemailer");
 const email = process.env.SENDER_EMAIL
 const password = process.env.SENDER_PASSWORD
 
-let transporter = nodemailer.createTransport({
+const transporter = nodemailer.createTransport({
     service: 'Yandex',
     auth: {
         user: email,
@@ -13,7 +13,7 @@ let transporter = nodemailer.createTransport({
 
 async function sendWelcomeEmail(to, name) {
     try {
-        let info = await transporter.sendMail({
+        const info = await transporter.sendMail({
             from: email,
             to,
             subject: 'Welcome to Task Manager',
@@ -29,7 +29,7 @@ async function sendWelcomeEmail(to, name) {
 
 async function sendCancellationEmail(to, name) {
     try {
-        let info = await transporter.sendMail({
+        const info = await transporter.sendMail({
             from: email,
             to,
             subject: 'Sad to see you leave',
